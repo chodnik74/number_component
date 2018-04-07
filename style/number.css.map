@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["number.css"],"sourcesContent":[".number { display: block; }\n\n.number__input { padding: 10px 20px; border: 1px solid #dadada; }\n\n.number__control { padding: 5px; }\n"],"file":"number.css"}

@@ -1,0 +1,12 @@
+.number {
+  display:block;
+  &__input {
+    padding:10px 20px;
+    border: 1px solid #dadada;
+  }
+  &__control {
+    padding:5px;
+    &--plus {}
+    &--minus {}
+  }
+}
