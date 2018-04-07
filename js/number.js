@@ -3,8 +3,9 @@ $( document ).ready(function() {
     var inputNumber = $(".number__input");
     var inputPlus = $(".number__control--plus");
     var inputMinus = $(".number__control--minus");
-    var maxValue = $(".number__input").data("max");
-    var minValue = $(".number__input").data("min");
+    var maxValue = $(".number__input").attr("data-max");
+    var minValue = $(".number__input").attr("data-min");
+    var stepValue = $(".number__input").attr("data-step");
 
     function numberRound(cislo) {
         return (Math.round((cislo) * 10000) / 10000);
@@ -15,8 +16,9 @@ $( document ).ready(function() {
     }
 
     function numberIsMax() {
-        currentNumber = $(".number__input").val();
-        if(currentNumber < maxValue) {
+        var currentNumber = $(".number__input").val();
+        var nextNumber = currentNumber + stepValue;
+        if(nextNumber < maxValue) {
             console.log("OK!");
             return false;
         } else {
@@ -25,8 +27,9 @@ $( document ).ready(function() {
         }
     }
     function numberIsMin() {
-        currentNumber = $(".number__input").val();
-        if(currentNumber > minValue) {
+        var currentNumber = $(".number__input").val();
+        var nextNumber = currentNumber - stepValue;
+        if(nextNumber > minValue) {
             console.log("OK!");
             return false;
         } else {
@@ -55,14 +58,14 @@ $( document ).ready(function() {
 
     inputPlus.mousedown(function (e) {
         if(numberIsMax()) {return false;}
-        numberModify(inputNumber, 1);
+        numberModify(inputNumber, stepValue);
     });
     inputPlus.mouseup(function (e) {
         numberModifyStop();
     });
     inputMinus.mousedown(function (e) {
         if(numberIsMin()) {return false;}
-        numberModify(inputNumber, -1);
+        numberModify(inputNumber, -stepValue);
     });
     inputMinus.mouseup(function (e) {
         numberModifyStop();
