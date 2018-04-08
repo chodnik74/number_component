@@ -20,7 +20,7 @@ $( document ).ready(function() {
         var currentNumber = inputNumber.val();
         var nextNumber = Number(currentNumber) + Number(stepValue);
         if(nextNumber < maxValue) {
-            inputMessage.html("");
+            //inputMessage.html("");
             return false;
         } else {
             inputMessage.html("<span>Maximální hodnota je: "+ maxValue +"</span>");
@@ -31,7 +31,7 @@ $( document ).ready(function() {
         var currentNumber = inputNumber.val();
         var nextNumber = Number(currentNumber) - Number(stepValue);
         if(nextNumber > minValue) {
-            inputMessage.html("");
+            //inputMessage.html("");
             return false;
         } else {
             inputMessage.html("<span>Minimální hodnota je: "+ minValue +"</span>");
@@ -57,7 +57,8 @@ $( document ).ready(function() {
         modifySpeed = defaultSpeed;
     }
 
-    inputNumber.change(function () {
+    inputNumber.on("change keypress paste focus textInput input",function () {
+        console.log("Changed");
         if(numberIsMax()) {
             inputNumber.val(maxValue);
         }
@@ -66,15 +67,23 @@ $( document ).ready(function() {
         }
     });
     inputPlus.mousedown(function (e) {
-        if(numberIsMax()) {return false;}
-        numberModify(inputNumber, stepValue);
+        if(numberIsMax()) {
+            return false;
+        } else {
+            inputMessage.html("");
+            numberModify(inputNumber, stepValue);
+        }
     });
     inputPlus.mouseup(function (e) {
         numberModifyStop();
     });
     inputMinus.mousedown(function (e) {
-        if(numberIsMin()) {return false;}
-        numberModify(inputNumber, -stepValue);
+        if(numberIsMin()) {
+            return false;
+        } else {
+            inputMessage.html("");
+            numberModify(inputNumber, -stepValue);
+        }
     });
     inputMinus.mouseup(function (e) {
         numberModifyStop();
