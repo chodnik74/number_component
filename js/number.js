@@ -19,8 +19,7 @@ $( document ).ready(function() {
     function numberIsMax() {
         var currentNumber = inputNumber.val();
         var nextNumber = Number(currentNumber) + Number(stepValue);
-        if(nextNumber < maxValue) {
-            //inputMessage.html("");
+        if(nextNumber <= maxValue) {
             return false;
         } else {
             inputMessage.html("<span>Maximální hodnota je: "+ maxValue +"</span>");
@@ -30,8 +29,7 @@ $( document ).ready(function() {
     function numberIsMin() {
         var currentNumber = inputNumber.val();
         var nextNumber = Number(currentNumber) - Number(stepValue);
-        if(nextNumber > minValue) {
-            //inputMessage.html("");
+        if(nextNumber >= minValue) {
             return false;
         } else {
             inputMessage.html("<span>Minimální hodnota je: "+ minValue +"</span>");

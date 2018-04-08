@@ -1,39 +1,34 @@
-var gulp             = require('gulp'),
-    sass             = require('gulp-sass'),
-    autoprefixer     = require('gulp-autoprefixer'),
-    sourcemaps       = require('gulp-sourcemaps'),
-    rename           = require('gulp-rename'),
-    browserSync      = require('browser-sync').create();
+var gulp = require('gulp');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
+var input = './sass/**/*.scss';
+var output = './sass/css';
 
+var sassOptions = {
+    errLogToConsole: true,
+    outputStyle: 'compressed'
+};
 
-gulp.task('sass', function(){
-    // sass directory
-    return gulp.src('./style/*scss')
-            .pipe(sass())
-            //outputstyle (nested, compact, expanded, compressed)
-            .pipe(sass({outputStyle:'compact'}).on('error', sass.logError))
-            // sourcemaps
-            .pipe(sourcemaps.init())
-            // sourcemaps output directory
-            .pipe(sourcemaps.write(('./')))
-            // css output directory
-            .pipe(gulp.dest('./style')),
-            // watch file
-            gulp.watch('./style/*.scss', ['sass']);
+gulp.task('sass', function () {
+    return gulp
+        .src(input)
+        .pipe(sourcemaps.init())
+        .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(output));
 });
 
-
-// sass/css browser tracking
-gulp.task('browser-sync', function(){
-    browserSync.init({
-        server:{
-            baseDir: './'
-        }
-    });
-    // watch html
-    gulp.watch('./*.html').on('change', browserSync.reload);
+gulp.task('watch', function() {
+    return gulp
+    // Watch the input folder for change,
+    // and run `sass` task when something happens
+        .watch(input, ['sass'])
+        // When there is a change,
+        // log a message in the console
+        .on('change', function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+        });
 });
 
-// gulp default (sass, minify-css, browser-sync) method
-gulp.task('default', ['sass', 'browser-sync']);
+gulp.task('default', ['sass', 'watch' /*, possible other tasks... */]);
