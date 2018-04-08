@@ -1,12 +1,55 @@
+$componentMainColor: #222;
+$componentSecondColor: #fff;
+$controlHeight: 35px;
+$controlWidth: 35px;
+$inputHeight: 35px;
+$inputWidth: 100px;
+
 .number {
-  display:block;
+  display: inline-block;
+  * {
+    box-sizing:border-box;
+  }
+  &__content {
+    position:relative;
+    float:left;
+  }
   &__input {
-    padding:10px 20px;
-    border: 1px solid #dadada;
+    padding:0 $controlWidth+5px;
+    border: 1px solid $componentMainColor;
+    color: $componentMainColor;
+    height: $inputHeight;
+    line-height: $inputHeight;
+    width: $inputWidth + 2*($controlWidth);
+    text-align:center;
+    outline:none;
+    font-size:16px;
   }
   &__control {
-    padding:5px;
-    &--plus {}
-    &--minus {}
+    width:$controlWidth;
+    height: $controlHeight;
+    line-height: $controlHeight;
+    background:$componentMainColor;
+    color:$componentSecondColor;
+    border: none;
+    outline:none;
+    cursor: pointer;
+    font-size:18px;
+    position:absolute;
+    top:0;
+    text-align:center;
+    &--plus {right:0;}
+    &--minus {left:0;}
+  }
+  &__message {
+    float:left;
+    clear:both;
+    margin-top:10px;
+    span {
+      width:100%;
+      padding:5px 10px;
+      background:#e74c3c;
+      color:#fff;
+    }
   }
 }

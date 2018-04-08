@@ -10,9 +10,13 @@
 <body>
 
 <div class="number">
-	<input type="number" id="number" class="number__input" value="1" data-max="100" data-min="1" data-step="2">
-	<button class="number__control number__control--plus">+</button>
-	<button class="number__control number__control--minus">-</button>
+	<div class="number__content">
+		<input type="number" id="number" class="number__input" value="1" min="1" max="100" step="2">
+		<button class="number__control number__control--plus">+</button>
+		<button class="number__control number__control--minus">-</button>
+	</div>
+	<div class="number__message">
+	</div>
 </div>
 
 </body>

@@ -3,9 +3,10 @@ $( document ).ready(function() {
     var inputNumber = $(".number__input");
     var inputPlus = $(".number__control--plus");
     var inputMinus = $(".number__control--minus");
-    var maxValue = parseInt(inputNumber.attr("data-max"));
-    var minValue = parseInt(inputNumber.attr("data-min"));
-    var stepValue = parseInt(inputNumber.attr("data-step"));
+    var inputMessage = $(".number__message");
+    var maxValue = parseInt(inputNumber.attr("max"));
+    var minValue = parseInt(inputNumber.attr("min"));
+    var stepValue = parseInt(inputNumber.attr("step"));
 
     function numberRound(number) {
         return (Math.round((number) * 10000) / 10000);
@@ -17,27 +18,23 @@ $( document ).ready(function() {
 
     function numberIsMax() {
         var currentNumber = inputNumber.val();
-        var nextNumber = currentNumber+stepValue;
-        console.log("Current " + currentNumber);
-        console.log("Next " + nextNumber);
-        console.log("Max " + maxValue);
-        console.log("Step " + stepValue);
-        if(currentNumber < maxValue) {
-            console.log("OK!");
+        var nextNumber = Number(currentNumber) + Number(stepValue);
+        if(nextNumber < maxValue) {
+            inputMessage.html("");
             return false;
         } else {
-            console.log("MAX!");
+            inputMessage.html("<span>Maximální hodnota je: "+ maxValue +"</span>");
             return true;
         }
     }
     function numberIsMin() {
         var currentNumber = inputNumber.val();
-        var nextNumber = currentNumber-stepValue;
-        if(currentNumber > minValue) {
-            console.log("OK!");
+        var nextNumber = Number(currentNumber) - Number(stepValue);
+        if(nextNumber > minValue) {
+            inputMessage.html("");
             return false;
         } else {
-            console.log("MIN!");
+            inputMessage.html("<span>Minimální hodnota je: "+ minValue +"</span>");
             return true;
         }
     }
@@ -49,8 +46,8 @@ $( document ).ready(function() {
         input.val(newValue);
         numberModifyTimer = setTimeout(function() {
             modifySpeed = modifySpeed * 0.9;
-            //if(numberIsMax()) {return false;}
-            //if(numberIsMin()) {return false;}
+            if(numberIsMax()) {return false;}
+            if(numberIsMin()) {return false;}
             numberModify(input, value);
         }, modifySpeed)
     }
@@ -60,13 +57,13 @@ $( document ).ready(function() {
         modifySpeed = defaultSpeed;
     }
 
-    inputNumber.keydown(function () {
-        /*if(numberIsMax()) {
+    inputNumber.change(function () {
+        if(numberIsMax()) {
             inputNumber.val(maxValue);
         }
         if(numberIsMin()) {
             inputNumber.val(minValue);
-        }*/
+        }
     });
     inputPlus.mousedown(function (e) {
         if(numberIsMax()) {return false;}
