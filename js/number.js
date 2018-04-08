@@ -3,12 +3,12 @@ $( document ).ready(function() {
     var inputNumber = $(".number__input");
     var inputPlus = $(".number__control--plus");
     var inputMinus = $(".number__control--minus");
-    var maxValue = $(".number__input").attr("data-max");
-    var minValue = $(".number__input").attr("data-min");
-    var stepValue = $(".number__input").attr("data-step");
+    var maxValue = parseInt(inputNumber.attr("data-max"));
+    var minValue = parseInt(inputNumber.attr("data-min"));
+    var stepValue = parseInt(inputNumber.attr("data-step"));
 
-    function numberRound(cislo) {
-        return (Math.round((cislo) * 10000) / 10000);
+    function numberRound(number) {
+        return (Math.round((number) * 10000) / 10000);
     }
 
     function numberToVal(value) {
@@ -16,9 +16,13 @@ $( document ).ready(function() {
     }
 
     function numberIsMax() {
-        var currentNumber = $(".number__input").val();
-        var nextNumber = currentNumber + stepValue;
-        if(nextNumber < maxValue) {
+        var currentNumber = inputNumber.val();
+        var nextNumber = currentNumber+stepValue;
+        console.log("Current " + currentNumber);
+        console.log("Next " + nextNumber);
+        console.log("Max " + maxValue);
+        console.log("Step " + stepValue);
+        if(currentNumber < maxValue) {
             console.log("OK!");
             return false;
         } else {
@@ -27,9 +31,9 @@ $( document ).ready(function() {
         }
     }
     function numberIsMin() {
-        var currentNumber = $(".number__input").val();
-        var nextNumber = currentNumber - stepValue;
-        if(nextNumber > minValue) {
+        var currentNumber = inputNumber.val();
+        var nextNumber = currentNumber-stepValue;
+        if(currentNumber > minValue) {
             console.log("OK!");
             return false;
         } else {
@@ -45,8 +49,8 @@ $( document ).ready(function() {
         input.val(newValue);
         numberModifyTimer = setTimeout(function() {
             modifySpeed = modifySpeed * 0.9;
-            if(numberIsMax()) {return false;}
-            if(numberIsMin()) {return false;}
+            //if(numberIsMax()) {return false;}
+            //if(numberIsMin()) {return false;}
             numberModify(input, value);
         }, modifySpeed)
     }
@@ -56,6 +60,14 @@ $( document ).ready(function() {
         modifySpeed = defaultSpeed;
     }
 
+    inputNumber.keydown(function () {
+        /*if(numberIsMax()) {
+            inputNumber.val(maxValue);
+        }
+        if(numberIsMin()) {
+            inputNumber.val(minValue);
+        }*/
+    });
     inputPlus.mousedown(function (e) {
         if(numberIsMax()) {return false;}
         numberModify(inputNumber, stepValue);
